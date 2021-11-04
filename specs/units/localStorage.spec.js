@@ -1,3 +1,5 @@
+const { expect } = require("chai");
+
 describe("localStorage", () => {
   subject(() => window.localStorage);
 
@@ -48,6 +50,28 @@ describe("localStorage", () => {
       it('is expected to return "undefined"', () => {
         expect($response).to.equal(undefined);
       });
+    });
+  });
+  describe("#removeItem", () => {
+    beforeEach(() => {
+      $subject.setItem("keyToRemove", "some value");
+    });
+    it("is expected to remove an item", () => {
+      $subject.removeItem("keyToRemove");
+      expect($subject.data).to.not.have.own.property("keyToRemove");
+    });
+  });
+  describe("#clear", () => {
+    beforeEach(() => {
+      $subject.setItem("myKey", "some value");
+      $subject.setItem("myKey2", "some value");
+      $subject.clear();
+    });
+    it("is expected to remove an item myKey", () => {
+      expect($subject.data).to.not.have.own.property("myKey");
+    });
+    it("is expected to remove an item myKey2", () => {
+      expect($subject.data).to.not.have.own.property("myKey2");
     });
   });
 });

@@ -7,14 +7,14 @@ describe("AddressBook", () => {
   });
   subject(() => new AddressBook());
 
-  it("is expected to be an object", () => {
-    expect($subject).to.be.an("object");
-  });
+  // it("is expected to be an object", () => {
+  //   expect($subject).to.be.an("object");
+  // });
   it(() => is.expected.to.be.an("object"));
 
-  it("is expected to be an instance of an AddressBokk class", () => {
-    expect($subject).to.be.an.instanceOf(AddressBook);
-  });
+  // it("is expected to be an instance of an AddressBokk class", () => {
+  //   expect($subject).to.be.an.instanceOf(AddressBook);
+  // });
   it(() => is.expected.to.be.an.instanceOf(AddressBook));
 
   it(() => is.expected.to.respondTo("index"));
@@ -35,7 +35,7 @@ describe("AddressBook", () => {
       phone: "+1202123456",
       twitter: "@john_doe",
     });
-    context.only("with valid data", () => {
+    context("with valid data", () => {
       beforeEach(() => {
         message = $subject.create($validData);
       });
@@ -62,6 +62,28 @@ describe("AddressBook", () => {
       it("is expected to respond with a success message", () => {
         expect(message).to.equal("The entry was added to the address book");
       });
+    });
+    def("invalidData", "this is not an object!");
+    context("with valid data", () => {
+      beforeEach(() => {
+        message = $subject.create($invalidData);
+      });
+      it("is expected to respond with success message", () => {
+        expect(message).to.equal("We could not process your data!");
+      });
+    });
+  });
+  describe("#index", () => {
+    let collection;
+    beforeEach(() => {
+      $subject.create({ name: "Thomas" });
+      $subject.create({ name: "Love" });
+      $subject.create({ name: "Gavin" });
+      sinon.reset();
+      collection = $subject.index();
+    });
+    it("is expected to call on localStorage.getItem()", () => {
+      expect(collection).to.have.length(3);
     });
   });
 });
