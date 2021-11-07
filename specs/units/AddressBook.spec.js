@@ -79,7 +79,6 @@ describe("AddressBook", () => {
       $subject.create({ name: "Thomas" });
       $subject.create({ name: "Love" });
       $subject.create({ name: "Gavin" });
-      sinon.reset();
       collection = $subject.index();
     });
     it("is expected to call on localStorage.getItem()", () => {
